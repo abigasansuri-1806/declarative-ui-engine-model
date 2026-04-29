@@ -32,6 +32,10 @@ cp configs/loan-application/i18n.json adapters/react/public/i18n.json
 # Refresh browser
 
 # for angular
+
+node engine/index.js configs/loan-application/manifest.json adapters/angular/public/aut.json
+cp configs/loan-application/i18n.json adapters/angular/public/i18n.json
+
 cd adapters/angular
 npm install
 ng serve
