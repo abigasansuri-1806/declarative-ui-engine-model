@@ -1,0 +1,103 @@
+{
+  "layout": {
+    "type": "stepped",
+    "steps": [
+      {
+        "id": "step_personal",
+        "title": "Personal Details",
+        "sections": [
+          {
+            "id": "section_identity",
+            "title": "Identity Information",
+            "collapsible": false,
+            "columns": 2,
+            "reflow": "compress",
+            "fields": [
+              "applicant_name",
+              "date_of_birth",
+              "pan_number",
+              "aadhaar_number"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "step_loan",
+        "title": "Loan Details",
+        "sections": [
+          {
+            "id": "section_loan_basics",
+            "title": "Loan Requirements",
+            "collapsible": false,
+            "columns": 2,
+            "reflow": "compress",
+            "fields": [
+              "loan_type",
+              "loan_amount",
+              "loan_tenure_months"
+            ]
+          },
+          {
+            "id": "section_property",
+            "title": "Property Details",
+            "collapsible": true,
+            "columns": 1,
+            "reflow": "compress",
+            "fields": [
+              "property_value",
+              "property_address"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "step_financial",
+        "title": "Financial Information",
+        "sections": [
+          {
+            "id": "section_employment",
+            "title": "Employment Details",
+            "collapsible": false,
+            "columns": 2,
+            "reflow": "compress",
+            "fields": [
+              "employment_type",
+              "employer_name",
+              "annual_income"
+            ]
+          },
+          {
+            "id": "section_co_applicant",
+            "title": "Co-Applicant Details",
+            "collapsible": true,
+            "optional": true,
+            "columns": 2,
+            "reflow": "compress",
+            "fields": [
+              "co_applicant_name",
+              "co_applicant_pan",
+              "nominee_name"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "step_consent",
+        "title": "Review & Consent",
+        "sections": [
+          {
+            "id": "section_consent",
+            "title": "Declarations",
+            "collapsible": false,
+            "columns": 1,
+            "reflow": "compress",
+            "fields": [
+              "kyc_consent",
+              "declaration_consent"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

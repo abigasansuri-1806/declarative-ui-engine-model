@@ -1,0 +1,225 @@
+{
+  "rules": [
+    {
+      "id": "show_property_fields",
+      "type": "visibility",
+      "trigger": {
+        "field": "loan_type",
+        "event": "onChange"
+      },
+      "condition": {
+        "field": "loan_type",
+        "op": "==",
+        "value": "HOME"
+      },
+      "actions": [
+        {
+          "type": "show",
+          "target": "property_value"
+        },
+        {
+          "type": "show",
+          "target": "property_address"
+        },
+        {
+          "type": "show",
+          "target": "section_property"
+        }
+      ],
+      "elseActions": [
+        {
+          "type": "hide",
+          "target": "property_value"
+        },
+        {
+          "type": "hide",
+          "target": "property_address"
+        },
+        {
+          "type": "hide",
+          "target": "section_property"
+        },
+        {
+          "type": "clear",
+          "target": "property_value"
+        },
+        {
+          "type": "clear",
+          "target": "property_address"
+        }
+      ]
+    },
+    {
+      "id": "show_employer_field",
+      "type": "visibility",
+      "trigger": {
+        "field": "employment_type",
+        "event": "onChange"
+      },
+      "condition": {
+        "field": "employment_type",
+        "op": "==",
+        "value": "SALARIED"
+      },
+      "actions": [
+        {
+          "type": "show",
+          "target": "employer_name"
+        }
+      ],
+      "elseActions": [
+        {
+          "type": "hide",
+          "target": "employer_name"
+        },
+        {
+          "type": "clear",
+          "target": "employer_name"
+        }
+      ]
+    },
+    {
+      "id": "cap_tenure_for_personal_loan",
+      "type": "fieldUpdate",
+      "trigger": {
+        "field": "loan_type",
+        "event": "onChange"
+      },
+      "condition": {
+        "operator": "AND",
+        "operands": [
+          {
+            "field": "loan_type",
+            "op": "==",
+            "value": "PERSONAL"
+          },
+          {
+            "field": "loan_tenure_months",
+            "op": ">",
+            "value": "60"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "setValue",
+          "target": "loan_tenure_months",
+          "value": 60
+        },
+        {
+          "type": "notify",
+          "target": "loan_tenure_months",
+          "message": "tenure_capped_personal"
+        }
+      ]
+    },
+    {
+      "id": "update_max_loan_amount",
+      "type": "fieldUpdate",
+      "trigger": {
+        "field": "annual_income",
+        "event": "onBlur"
+      },
+      "condition": {
+        "field": "annual_income",
+        "op": "!=",
+        "value": null
+      },
+      "actions": [
+        {
+          "type": "setMax",
+          "target": "loan_amount",
+          "value": {
+            "field": "annual_income",
+            "multiply": 60
+          }
+        }
+      ]
+    },
+    {
+      "id": "require_co_applicant_pan",
+      "type": "validation",
+      "trigger": {
+        "field": "co_applicant_name",
+        "event": "onChange"
+      },
+      "condition": {
+        "operator": "AND",
+        "operands": [
+          {
+            "field": "co_applicant_name",
+            "op": "!=",
+            "value": null
+          },
+          {
+            "field": "co_applicant_name",
+            "op": "!=",
+            "value": ""
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "show",
+          "target": "co_applicant_pan"
+        }
+      ],
+      "elseActions": [
+        {
+          "type": "hide",
+          "target": "co_applicant_pan"
+        },
+        {
+          "type": "clear",
+          "target": "co_applicant_pan"
+        }
+      ]
+    },
+    {
+      "id": "lock_consents_on_review",
+      "type": "stateChange",
+      "trigger": {
+        "event": "onStepEnter",
+        "stepId": "step_consent"
+      },
+      "actions": [
+        {
+          "type": "readonly",
+          "target": "applicant_name"
+        },
+        {
+          "type": "readonly",
+          "target": "pan_number"
+        },
+        {
+          "type": "readonly",
+          "target": "loan_type"
+        },
+        {
+          "type": "readonly",
+          "target": "loan_amount"
+        }
+      ]
+    },
+    {
+      "id": "show_nominee_for_home_loan",
+      "type": "visibility",
+      "trigger": {
+        "field": "loan_type",
+        "event": "onChange"
+      },
+      "condition": {
+        "field": "loan_type",
+        "op": "==",
+        "value": "HOME"
+      },
+      "actions": [
+        { "type": "show", "target": "nominee_name" }
+      ],
+      "elseActions": [
+        { "type": "hide",  "target": "nominee_name" },
+        { "type": "clear", "target": "nominee_name" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "rules": [
+    {
+      "fieldId": "patient_name",
+      "required": true,
+      "constraints": [
+        {
+          "type": "minLength",
+          "value": 2,
+          "message": "patient_name.minLength"
+        },
+        {
+          "type": "pattern",
+          "value": "^[a-zA-Z\\s]+$",
+          "message": "patient_name.invalidChars"
+        }
+      ]
+    },
+    {
+      "fieldId": "date_of_birth",
+      "required": true,
+      "constraints": [
+        {
+          "type": "minAge",
+          "value": 0,
+          "message": "date_of_birth.future"
+        },
+        {
+          "type": "maxAge",
+          "value": 120,
+          "message": "date_of_birth.maxAge"
+        }
+      ]
+    },
+    {
+      "fieldId": "gender",
+      "required": true,
+      "constraints": []
+    },
+    {
+      "fieldId": "blood_group",
+      "required": false,
+      "constraints": []
+    },
+    {
+      "fieldId": "phone_number",
+      "required": true,
+      "constraints": [
+        {
+          "type": "exactLength",
+          "value": 10,
+          "message": "phone_number.invalidLength"
+        },
+        {
+          "type": "pattern",
+          "value": "^[6-9][0-9]{9}$",
+          "message": "phone_number.invalidFormat"
+        }
+      ]
+    },
+    {
+      "fieldId": "email_address",
+      "required": false,
+      "constraints": [
+        {
+          "type": "pattern",
+          "value": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+          "message": "email_address.invalidFormat"
+        }
+      ]
+    },
+    {
+      "fieldId": "address",
+      "required": true,
+      "constraints": [
+        {
+          "type": "minLength",
+          "value": 10,
+          "message": "address.minLength"
+        }
+      ]
+    },
+    {
+      "fieldId": "allergies",
+      "required": false,
+      "constraints": []
+    },
+    {
+      "fieldId": "current_medications",
+      "required": false,
+      "constraints": []
+    },
+    {
+      "fieldId": "primary_condition",
+      "required": true,
+      "constraints": [
+        {
+          "type": "minLength",
+          "value": 3,
+          "message": "primary_condition.minLength"
+        }
+      ]
+    },
+    {
+      "fieldId": "treatment_consent",
+      "required": true,
+      "constraints": [
+        {
+          "type": "mustBeTrue",
+          "message": "treatment_consent.required"
+        }
+      ]
+    },
+    {
+      "fieldId": "data_sharing_consent",
+      "required": true,
+      "constraints": [
+        {
+          "type": "mustBeTrue",
+          "message": "data_sharing_consent.required"
+        }
+      ]
+    },
+    {
+      "fieldId": "emergency_contact_name",
+      "required": true,
+      "constraints": [
+        {
+          "type": "minLength",
+          "value": 2,
+          "message": "emergency_contact_name.minLength"
+        }
+      ]
+    },
+    {
+      "fieldId": "emergency_contact_phone",
+      "required": true,
+      "constraints": [
+        {
+          "type": "exactLength",
+          "value": 10,
+          "message": "emergency_contact_phone.invalidLength"
+        },
+        {
+          "type": "pattern",
+          "value": "^[6-9][0-9]{9}$",
+          "message": "emergency_contact_phone.invalidFormat"
+        }
+      ]
+    }
+  ]
+}

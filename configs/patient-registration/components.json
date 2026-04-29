@@ -1,0 +1,117 @@
+{
+  "components": [
+    {
+      "fieldId": "patient_name",
+      "component": "TextInput",
+      "props": {
+        "autoComplete": "name",
+        "spellCheck": false
+      }
+    },
+    {
+      "fieldId": "date_of_birth",
+      "component": "DatePicker",
+      "props": {
+        "maxDate": "today",
+        "minDate": "1900-01-01",
+        "calendarStartDay": "monday"
+      }
+    },
+    {
+      "fieldId": "gender",
+      "component": "RadioGroup",
+      "props": {
+        "orientation": "horizontal",
+        "displayStyle": "card"
+      }
+    },
+    {
+      "fieldId": "blood_group",
+      "component": "Select",
+      "props": {
+        "searchable": false,
+        "clearable": true
+      }
+    },
+    {
+      "fieldId": "phone_number",
+      "component": "TextInput",
+      "props": {
+        "inputMode": "numeric",
+        "autoComplete": "tel"
+      }
+    },
+    {
+      "fieldId": "email_address",
+      "component": "TextInput",
+      "props": {
+        "inputMode": "email",
+        "autoComplete": "email",
+        "spellCheck": false
+      }
+    },
+    {
+      "fieldId": "address",
+      "component": "TextArea",
+      "props": {
+        "rows": 3,
+        "resizable": false
+      }
+    },
+    {
+      "fieldId": "allergies",
+      "component": "TextArea",
+      "props": {
+        "rows": 3,
+        "resizable": false
+      }
+    },
+    {
+      "fieldId": "current_medications",
+      "component": "TextArea",
+      "props": {
+        "rows": 3,
+        "resizable": false
+      }
+    },
+    {
+      "fieldId": "primary_condition",
+      "component": "TextInput",
+      "props": {
+        "spellCheck": false
+      }
+    },
+    {
+      "fieldId": "treatment_consent",
+      "component": "Checkbox",
+      "props": {
+        "variant": "prominent",
+        "linkedDocumentUrl": "/docs/treatment-consent.pdf"
+      }
+    },
+    {
+      "fieldId": "data_sharing_consent",
+      "component": "Checkbox",
+      "props": {
+        "variant": "prominent",
+        "linkedDocumentUrl": "/docs/data-sharing-policy.pdf"
+      }
+    },
+    {
+      "fieldId": "emergency_contact_name",
+      "component": "TextInput",
+      "props": {
+        "autoComplete": "name",
+        "spellCheck": false
+      }
+    },
+    {
+      "fieldId": "emergency_contact_phone",
+      "component": "TextInput",
+      "props": {
+        "inputMode": "numeric",
+        "autoComplete": "tel"
+      }
+    }
+  ]
+}

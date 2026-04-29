@@ -1,0 +1,109 @@
+{
+  "layout": {
+    "type": "stepped",
+    "steps": [
+      {
+        "id": "step_identity",
+        "title": "Patient Identity",
+        "sections": [
+          {
+            "id": "section_personal",
+            "title": "Personal Information",
+            "collapsible": false,
+            "columns": 2,
+            "reflow": "compress",
+            "fields": [
+              "patient_name",
+              "date_of_birth",
+              "gender",
+              "blood_group"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "step_contact",
+        "title": "Contact Details",
+        "sections": [
+          {
+            "id": "section_contact",
+            "title": "Contact Information",
+            "collapsible": false,
+            "columns": 2,
+            "reflow": "compress",
+            "fields": [
+              "phone_number",
+              "email_address"
+            ]
+          },
+          {
+            "id": "section_address",
+            "title": "Address",
+            "collapsible": false,
+            "columns": 1,
+            "reflow": "compress",
+            "fields": [
+              "address"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "step_medical",
+        "title": "Medical Information",
+        "sections": [
+          {
+            "id": "section_condition",
+            "title": "Current Condition",
+            "collapsible": false,
+            "columns": 1,
+            "reflow": "compress",
+            "fields": [
+              "primary_condition"
+            ]
+          },
+          {
+            "id": "section_history",
+            "title": "Medical History",
+            "collapsible": true,
+            "optional": true,
+            "columns": 1,
+            "reflow": "compress",
+            "fields": [
+              "allergies",
+              "current_medications"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "step_consent",
+        "title": "Consent & Emergency Contact",
+        "sections": [
+          {
+            "id": "section_emergency",
+            "title": "Emergency Contact",
+            "collapsible": false,
+            "columns": 2,
+            "reflow": "compress",
+            "fields": [
+              "emergency_contact_name",
+              "emergency_contact_phone"
+            ]
+          },
+          {
+            "id": "section_consent",
+            "title": "Declarations",
+            "collapsible": false,
+            "columns": 1,
+            "reflow": "compress",
+            "fields": [
+              "treatment_consent",
+              "data_sharing_consent"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

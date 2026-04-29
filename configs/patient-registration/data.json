@@ -1,0 +1,101 @@
+{
+  "fields": [
+    {
+      "id": "patient_name",
+      "type": "string",
+      "maxLength": 100,
+      "nullable": false
+    },
+    {
+      "id": "date_of_birth",
+      "type": "date",
+      "format": "DD/MM/YYYY",
+      "nullable": false
+    },
+    {
+      "id": "gender",
+      "type": "enum",
+      "source": "static",
+      "options": [
+        { "value": "MALE",   "label": "Male"   },
+        { "value": "FEMALE", "label": "Female" },
+        { "value": "OTHER",  "label": "Other"  }
+      ],
+      "nullable": false
+    },
+    {
+      "id": "blood_group",
+      "type": "enum",
+      "source": "static",
+      "options": [
+        { "value": "A_POS",  "label": "A+"  },
+        { "value": "A_NEG",  "label": "A-"  },
+        { "value": "B_POS",  "label": "B+"  },
+        { "value": "B_NEG",  "label": "B-"  },
+        { "value": "O_POS",  "label": "O+"  },
+        { "value": "O_NEG",  "label": "O-"  },
+        { "value": "AB_POS", "label": "AB+" },
+        { "value": "AB_NEG", "label": "AB-" }
+      ],
+      "nullable": true
+    },
+    {
+      "id": "phone_number",
+      "type": "string",
+      "pattern": "^[6-9][0-9]{9}$",
+      "nullable": false
+    },
+    {
+      "id": "email_address",
+      "type": "string",
+      "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+      "nullable": true
+    },
+    {
+      "id": "address",
+      "type": "text",
+      "maxLength": 300,
+      "nullable": false
+    },
+    {
+      "id": "allergies",
+      "type": "text",
+      "maxLength": 500,
+      "nullable": true
+    },
+    {
+      "id": "current_medications",
+      "type": "text",
+      "maxLength": 500,
+      "nullable": true
+    },
+    {
+      "id": "primary_condition",
+      "type": "string",
+      "maxLength": 200,
+      "nullable": false
+    },
+    {
+      "id": "treatment_consent",
+      "type": "boolean",
+      "nullable": false
+    },
+    {
+      "id": "data_sharing_consent",
+      "type": "boolean",
+      "nullable": false
+    },
+    {
+      "id": "emergency_contact_name",
+      "type": "string",
+      "maxLength": 100,
+      "nullable": false
+    },
+    {
+      "id": "emergency_contact_phone",
+      "type": "string",
+      "pattern": "^[6-9][0-9]{9}$",
+      "nullable": false
+    }
+  ]
+}

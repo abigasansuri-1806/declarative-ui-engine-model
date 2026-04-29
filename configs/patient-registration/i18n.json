@@ -1,0 +1,117 @@
+{
+  "locale": "en-IN",
+  "fields": {
+    "patient_name": {
+      "label": "Full Name",
+      "placeholder": "As per government ID",
+      "helpText": "Enter your name exactly as it appears on your government-issued ID"
+    },
+    "date_of_birth": {
+      "label": "Date of Birth",
+      "placeholder": "DD/MM/YYYY",
+      "helpText": null
+    },
+    "gender": {
+      "label": "Gender",
+      "placeholder": null,
+      "helpText": null
+    },
+    "blood_group": {
+      "label": "Blood Group (Optional)",
+      "placeholder": "Select blood group",
+      "helpText": "If known — helps in emergency situations"
+    },
+    "phone_number": {
+      "label": "Mobile Number",
+      "placeholder": "10-digit mobile number",
+      "helpText": "We will send appointment confirmations to this number"
+    },
+    "email_address": {
+      "label": "Email Address (Optional)",
+      "placeholder": "your@email.com",
+      "helpText": "For appointment reminders and reports"
+    },
+    "address": {
+      "label": "Residential Address",
+      "placeholder": "House number, street, locality, city, PIN code",
+      "helpText": null
+    },
+    "allergies": {
+      "label": "Known Allergies",
+      "placeholder": "List any known allergies e.g. Penicillin, Dust",
+      "helpText": "Leave blank if none known"
+    },
+    "current_medications": {
+      "label": "Current Medications",
+      "placeholder": "List medications with dosage e.g. Metformin 500mg",
+      "helpText": "Leave blank if not applicable"
+    },
+    "primary_condition": {
+      "label": "Primary Reason for Visit",
+      "placeholder": "Briefly describe your condition or symptoms",
+      "helpText": null
+    },
+    "treatment_consent": {
+      "label": "I consent to examination and treatment by the assigned medical team",
+      "helpText": "Required to proceed with registration"
+    },
+    "data_sharing_consent": {
+      "label": "I consent to my medical data being shared with treating physicians and relevant clinical staff",
+      "helpText": "Your data is protected under applicable healthcare privacy regulations"
+    },
+    "emergency_contact_name": {
+      "label": "Emergency Contact Name",
+      "placeholder": "Full name of emergency contact",
+      "helpText": null
+    },
+    "emergency_contact_phone": {
+      "label": "Emergency Contact Mobile",
+      "placeholder": "10-digit mobile number",
+      "helpText": null
+    }
+  },
+  "errors": {
+    "patient_name.minLength":                "Name must be at least 2 characters",
+    "patient_name.invalidChars":             "Name can only contain letters and spaces",
+    "date_of_birth.future":                  "Date of birth cannot be in the future",
+    "date_of_birth.maxAge":                  "Please enter a valid date of birth",
+    "phone_number.invalidLength":            "Mobile number must be exactly 10 digits",
+    "phone_number.invalidFormat":            "Please enter a valid Indian mobile number",
+    "email_address.invalidFormat":           "Please enter a valid email address",
+    "address.minLength":                     "Please enter a complete address",
+    "primary_condition.minLength":           "Please describe your condition in at least 3 characters",
+    "treatment_consent.required":            "You must consent to treatment to proceed",
+    "data_sharing_consent.required":         "You must consent to data sharing to proceed",
+    "emergency_contact_name.minLength":      "Emergency contact name must be at least 2 characters",
+    "emergency_contact_phone.invalidLength": "Emergency contact number must be exactly 10 digits",
+    "emergency_contact_phone.invalidFormat": "Please enter a valid Indian mobile number",
+    "emergency_contact_phone.required": "Please enter a valid emergency contact number",
+    "emergency_contact_name.required": "Please enter a valid emergency contact name",
+    "primary_condition.required": "Please mention the reason for visit",
+    "address.required": "Please enter a valid address",
+    "patient_name.required": "Please enter the patient's name"
+  },
+  "ui": {
+    "steps": {
+      "step_identity": "Patient Identity",
+      "step_contact":  "Contact Details",
+      "step_medical":  "Medical Information",
+      "step_consent":  "Consent & Emergency Contact"
+    },
+    "sections": {
+      "section_personal":  "Personal Information",
+      "section_contact":   "Contact Information",
+      "section_address":   "Address",
+      "section_condition": "Current Condition",
+      "section_history":   "Medical History",
+      "section_emergency": "Emergency Contact",
+      "section_consent":   "Declarations"
+    },
+    "actions": {
+      "next":   "Continue",
+      "back":   "Previous",
+      "submit": "Complete Registration",
+      "draft":  "Save Progress"
+    }
+  }
+}

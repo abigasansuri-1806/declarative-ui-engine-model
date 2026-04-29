@@ -1,0 +1,564 @@
+/* ─────────────────────────────────────────────
+   styles.css
+   Base styles for the declarative UI React adapter.
+   Intentionally minimal — just enough to make the
+   form functional and readable. No design system.
+───────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background: #f5f5f5;
+}
+
+/* ── App shell ──────────────────────────────── */
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-shell--loading,
+.app-shell--error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 16px;
+  color: #555;
+}
+
+.app-header {
+  background: #1a3a6b;
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-header__domain {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.15);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.app-header__title {
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.app-main {
+  max-width: 800px;
+  margin: 32px auto;
+  padding: 0 24px;
+}
+
+/* ── Step progress ──────────────────────────── */
+
+.step-progress {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 32px;
+  padding: 20px 24px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.step-progress__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  gap: 8px;
+  position: relative;
+}
+
+.step-progress__item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.step-progress__item--completed::after {
+  background: #1a3a6b;
+}
+
+.step-progress__dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 1;
+  background: #e0e0e0;
+  color: #555;
+  transition: background 0.2s, color 0.2s;
+}
+
+.step-progress__item--active .step-progress__dot {
+  background: #1a3a6b;
+  color: #fff;
+}
+
+.step-progress__item--completed .step-progress__dot {
+  background: #1a3a6b;
+  color: #fff;
+}
+
+.step-progress__label {
+  font-size: 12px;
+  color: #888;
+  text-align: center;
+}
+
+.step-progress__item--active .step-progress__label {
+  color: #1a3a6b;
+  font-weight: 500;
+}
+
+.step-progress__item--completed .step-progress__label {
+  color: #1a3a6b;
+}
+
+/* ── Step ───────────────────────────────────── */
+
+.step-wrapper {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  padding: 28px;
+}
+
+.step-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1a3a6b;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.step-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.step-navigation {
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.step-navigation__spacer {
+  flex: 1;
+}
+
+/* ── Section ────────────────────────────────── */
+
+.section-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #555;
+}
+
+.section-toggle {
+  font-size: 13px;
+  color: #1a3a6b;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.section-body {
+  padding: 4px 0;
+}
+
+/* ── Fields ─────────────────────────────────── */
+
+.field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.field-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.15s;
+  background: #fff;
+  color: #1a1a1a;
+}
+
+.field-input:focus {
+  border-color: #1a3a6b;
+}
+
+.field-input--error {
+  border-color: #c0392b;
+}
+
+.field-input--readonly {
+  background: #f5f5f5;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.field-input--select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.field-input--textarea {
+  min-height: 80px;
+  font-family: inherit;
+}
+
+.field-input--date {
+  cursor: pointer;
+}
+
+.field-help {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.4;
+}
+
+.field-error {
+  font-size: 12px;
+  color: #c0392b;
+  font-weight: 500;
+}
+
+/* ── Currency input ─────────────────────────── */
+
+.currency-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.currency-input-wrapper:focus-within {
+  border-color: #1a3a6b;
+}
+
+.currency-symbol {
+  padding: 10px 12px;
+  font-size: 15px;
+  background: #f5f5f5;
+  color: #555;
+  border-right: 1.5px solid #ccc;
+  font-weight: 500;
+}
+
+.currency-input-wrapper .field-input {
+  border: none;
+  border-radius: 0;
+}
+
+.currency-input-wrapper .field-input:focus {
+  border: none;
+  outline: none;
+}
+
+/* ── Slider ─────────────────────────────────── */
+
+.field-slider {
+  width: 100%;
+  height: 4px;
+  accent-color: #1a3a6b;
+  cursor: pointer;
+}
+
+.slider-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #888;
+}
+
+.slider-current-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a3a6b;
+  margin-bottom: 4px;
+}
+
+/* ── Radio group ────────────────────────────── */
+
+.radio-group {
+  border: none;
+  padding: 0;
+}
+
+.radio-group--horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.radio-group--vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.radio-option--card {
+  padding: 12px 16px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.radio-option--card:hover {
+  border-color: #1a3a6b;
+}
+
+.radio-option--card.radio-option--selected {
+  border-color: #1a3a6b;
+  background: #eef2f9;
+}
+
+.radio-input {
+  accent-color: #1a3a6b;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.radio-label {
+  font-size: 14px;
+  color: #333;
+}
+
+/* ── Checkbox ───────────────────────────────── */
+
+.field-wrapper--checkbox {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.field-wrapper--prominent {
+  padding: 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  width: 100%;
+}
+
+.checkbox-label--error {
+  color: #c0392b;
+}
+
+.checkbox-input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: #1a3a6b;
+  cursor: pointer;
+}
+
+.checkbox-text {
+  flex: 1;
+}
+
+.checkbox-link {
+  margin-left: 6px;
+  color: #1a3a6b;
+  font-size: 13px;
+}
+
+/* ── Buttons ────────────────────────────────── */
+
+.btn {
+  padding: 11px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  font-family: inherit;
+}
+
+.btn--primary {
+  background: #1a3a6b;
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: #142d54;
+}
+
+.btn--secondary {
+  background: #fff;
+  color: #1a3a6b;
+  border: 1.5px solid #1a3a6b;
+}
+
+.btn--secondary:hover {
+  background: #eef2f9;
+}
+
+.btn--submit {
+  background: #0d6c3e;
+  color: #fff;
+}
+
+.btn--submit:hover {
+  background: #0a5530;
+}
+
+/* ── Unknown component fallback ─────────────── */
+
+.field-unknown {
+  padding: 10px 12px;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #664d03;
+}
+
+/* ── Submission result ──────────────────────── */
+
+.submission-result {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  padding: 48px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.submission-result__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #0d6c3e;
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submission-result__title {
+  font-size: 22px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.submission-result__body {
+  font-size: 15px;
+  color: #555;
+  max-width: 400px;
+}
+
+.submission-result__ref {
+  font-size: 13px;
+  color: #888;
+  font-family: monospace;
+}
+
+/* ── Loading spinner ────────────────────────── */
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #1a3a6b;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

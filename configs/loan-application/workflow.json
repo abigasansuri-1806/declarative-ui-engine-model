@@ -1,0 +1,112 @@
+{
+  "workflow": {
+    "type": "linear-with-guards",
+    "initialStep": "step_personal",
+    "steps": [
+      {
+        "id": "step_personal",
+        "next": "step_loan",
+        "guards": [
+          {
+            "type": "validationPass",
+            "fields": [
+              "applicant_name",
+              "date_of_birth",
+              "pan_number",
+              "aadhaar_number"
+            ],
+            "onFail": "blockNavigation"
+          }
+        ]
+      },
+      {
+        "id": "step_loan",
+        "next": "step_financial",
+        "guards": [
+          {
+            "type": "validationPass",
+            "fields": [
+              "loan_type",
+              "loan_amount",
+              "loan_tenure_months"
+            ],
+            "onFail": "blockNavigation"
+          },
+          {
+            "type": "conditionalValidationPass",
+            "when": "loan_type == HOME",
+            "fields": [
+              "property_value",
+              "property_address"
+            ],
+            "onFail": "blockNavigation"
+          }
+        ]
+      },
+      {
+        "id": "step_financial",
+        "next": "step_consent",
+        "guards": [
+          {
+            "type": "validationPass",
+            "fields": [
+              "employment_type",
+              "annual_income"
+            ],
+            "onFail": "blockNavigation"
+          },
+          {
+            "type": "conditionalValidationPass",
+            "when": "employment_type == SALARIED",
+            "fields": [
+              "employer_name"
+            ],
+            "onFail": "blockNavigation"
+          },
+          {
+            "type": "eligibilityCheck",
+            "rule": {
+              "field": "annual_income",
+              "op": ">=",
+              "value": 180000
+            },
+            "onFail": "showMessage",
+            "message": "eligibility.incomeInsufficient"
+          }
+        ]
+      },
+      {
+        "id": "step_consent",
+        "next": null,
+        "guards": [
+          {
+            "type": "validationPass",
+            "fields": [
+              "kyc_consent",
+              "declaration_consent"
+            ],
+            "onFail": "blockNavigation"
+          }
+        ],
+        "onComplete": {
+          "action": "submit",
+          "preSubmitHooks": [
+            "generateApplicationId",
+            "timestampSubmission",
+            "writeAuditLog"
+          ],
+          "postSubmitActions": [
+            "sendConfirmationEmail",
+            "triggerCreditBureau"
+          ]
+        }
+      }
+    ],
+    "navigation": {
+      "allowBackNavigation": true,
+      "confirmOnBack": false,
+      "saveProgressOnBack": true,
+      "showStepProgress": true
+    }
+  }
+}

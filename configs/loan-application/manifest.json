@@ -1,0 +1,29 @@
+{
+  "id": "loan-application-v1",
+  "version": "1.0.0",
+  "title": "Loan Application Form",
+  "domain": "BFSI",
+  "description": "Standard retail loan application for personal and home loans",
+  "locale": "en-IN",
+  "layers": {
+    "data":       "./data.json",
+    "layout":     "./layout.json",
+    "components": "./components.json",
+    "validation": "./validation.json",
+    "behaviour":  "./behaviour.json",
+    "workflow":   "./workflow.json",
+    "i18n":       "./i18n.json"
+  },
+  "domainExtensions": ["bfsi-kyc", "bfsi-compliance"],
+  "rendererHints": {
+    "submitAction": "POST /api/loans/applications",
+    "draftAction":  "PUT  /api/loans/applications/draft",
+    "auditLog":     true
+  },
+  "meta": {
+    "createdBy": "config-author",
+    "createdAt": "2026-03-01",
+    "approvedBy": "compliance-officer",
+    "approvedAt": "2026-03-02"
+  }
+}

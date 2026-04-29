@@ -1,0 +1,29 @@
+{
+  "id": "patient-registration-v1",
+  "version": "1.0.0",
+  "title": "Patient Registration Form",
+  "domain": "Healthcare",
+  "description": "Standard patient registration for outpatient and inpatient services",
+  "locale": "en-IN",
+  "layers": {
+    "data":       "./data.json",
+    "layout":     "./layout.json",
+    "components": "./components.json",
+    "validation": "./validation.json",
+    "behaviour":  "./behaviour.json",
+    "workflow":   "./workflow.json",
+    "i18n":       "./i18n.json"
+  },
+  "domainExtensions": ["healthcare-consent", "healthcare-privacy"],
+  "rendererHints": {
+    "submitAction": "POST /api/patients/registrations",
+    "draftAction":  "PUT /api/patients/registrations/draft",
+    "auditLog":     true
+  },
+  "meta": {
+    "createdBy":  "config-author",
+    "createdAt":  "2026-03-01",
+    "approvedBy": "clinical-officer",
+    "approvedAt": "2026-03-02"
+  }
+}

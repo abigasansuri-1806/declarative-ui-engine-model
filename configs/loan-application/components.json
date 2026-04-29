@@ -1,0 +1,143 @@
+{
+  "components": [
+    {
+      "fieldId": "applicant_name",
+      "component": "TextInput",
+      "props": {
+        "autoComplete": "name",
+        "spellCheck": false
+      }
+    },
+    {
+      "fieldId": "date_of_birth",
+      "component": "DatePicker",
+      "props": {
+        "maxDate": "today",
+        "minDate": "1900-01-01",
+        "calendarStartDay": "monday"
+      }
+    },
+    {
+      "fieldId": "pan_number",
+      "component": "TextInput",
+      "props": {
+        "transform": "uppercase",
+        "maskPattern": "AAAAA9999A",
+        "spellCheck": false
+      }
+    },
+    {
+      "fieldId": "aadhaar_number",
+      "component": "TextInput",
+      "props": {
+        "inputMode": "numeric",
+        "maskDisplay": "XXXX-XXXX-####"
+      }
+    },
+    {
+      "fieldId": "loan_type",
+      "component": "RadioGroup",
+      "props": {
+        "orientation": "horizontal",
+        "displayStyle": "card"
+      }
+    },
+    {
+      "fieldId": "loan_amount",
+      "component": "CurrencyInput",
+      "props": {
+        "currencySymbol": "₹",
+        "thousandSeparator": true,
+        "showSlider": true,
+        "sliderStep": 10000
+      }
+    },
+    {
+      "fieldId": "loan_tenure_months",
+      "component": "SliderInput",
+      "props": {
+        "step": 6,
+        "showLabels": true,
+        "labelFormat": "{value} months"
+      }
+    },
+    {
+      "fieldId": "annual_income",
+      "component": "CurrencyInput",
+      "props": {
+        "currencySymbol": "₹",
+        "thousandSeparator": true
+      }
+    },
+    {
+      "fieldId": "employment_type",
+      "component": "Select",
+      "props": {
+        "searchable": false,
+        "clearable": false
+      }
+    },
+    {
+      "fieldId": "employer_name",
+      "component": "TextInput",
+      "props": {
+        "autoComplete": "organization"
+      }
+    },
+    {
+      "fieldId": "property_value",
+      "component": "CurrencyInput",
+      "props": {
+        "currencySymbol": "₹",
+        "thousandSeparator": true
+      }
+    },
+    {
+      "fieldId": "property_address",
+      "component": "TextArea",
+      "props": {
+        "rows": 3,
+        "resizable": false
+      }
+    },
+    {
+      "fieldId": "co_applicant_name",
+      "component": "TextInput",
+      "props": {
+        "autoComplete": "name"
+      }
+    },
+    {
+      "fieldId": "co_applicant_pan",
+      "component": "TextInput",
+      "props": {
+        "transform": "uppercase",
+        "maskPattern": "AAAAA9999A"
+      }
+    },
+    {
+      "fieldId": "kyc_consent",
+      "component": "Checkbox",
+      "props": {
+        "variant": "prominent",
+        "linkedDocumentUrl": "/docs/kyc-terms.pdf"
+      }
+    },
+    {
+      "fieldId": "declaration_consent",
+      "component": "Checkbox",
+      "props": {
+        "variant": "prominent",
+        "linkedDocumentUrl": "/docs/loan-declaration.pdf"
+      }
+    },
+    {
+      "fieldId": "nominee_name",
+      "component": "TextInput",
+      "props": {
+        "autoComplete": "name",
+        "spellCheck": false
+      }
+    }
+  ]
+}

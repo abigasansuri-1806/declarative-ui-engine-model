@@ -1,0 +1,18 @@
+{
+  "name": "declarative-ui-react-adapter",
+  "version": "1.0.0",
+  "description": "React adapter for the declarative UI framework",
+  "scripts": {
+    "dev":   "vite",
+    "build": "vite build",
+    "generate": "node ../../engine/index.js ../../configs/loan-application/manifest.json public/aut.json && cp ../../configs/loan-application/i18n.json public/i18n.json"
+  },
+  "dependencies": {
+    "react":     "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "vite":          "^5.0.0",
+    "@vitejs/plugin-react": "^4.0.0"
+  }
+}

@@ -1,0 +1,37 @@
+BFSI — Loan Application
+# From the repo root
+node engine/index.js configs/loan-application/manifest.json adapters/react/public/aut.json
+cp configs/loan-application/i18n.json adapters/react/public/i18n.json
+
+# Start the adapter
+cd adapters/react
+npm install        # only needed first time
+npm run dev
+
+# Open http://localhost:5173
+
+Healthcare — Patient Registration
+# From the repo root
+node engine/index.js configs/patient-registration/manifest.json adapters/react/public/aut.json
+cp configs/patient-registration/i18n.json adapters/react/public/i18n.json
+
+# Start the adapter (if not already running)
+cd adapters/react
+npm run dev
+
+# Open http://localhost:5173
+
+# Switch to Healthcare (from repo root)
+node engine/index.js configs/patient-registration/manifest.json adapters/react/public/aut.json
+cp configs/patient-registration/i18n.json adapters/react/public/i18n.json
+# Refresh browser
+
+# Switch back to BFSI (from repo root)
+node engine/index.js configs/loan-application/manifest.json adapters/react/public/aut.json
+cp configs/loan-application/i18n.json adapters/react/public/i18n.json
+# Refresh browser
+
+# for angular
+cd adapters/angular
+npm install
+ng serve

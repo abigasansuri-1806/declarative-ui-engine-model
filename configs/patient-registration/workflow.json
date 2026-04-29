@@ -1,0 +1,68 @@
+{
+  "workflow": {
+    "type": "linear-with-guards",
+    "initialStep": "step_identity",
+    "steps": [
+      {
+        "id": "step_identity",
+        "next": "step_contact",
+        "guards": [
+          {
+            "type": "validationPass",
+            "fields": ["patient_name", "date_of_birth", "gender"],
+            "onFail": "blockNavigation"
+          }
+        ]
+      },
+      {
+        "id": "step_contact",
+        "next": "step_medical",
+        "guards": [
+          {
+            "type": "validationPass",
+            "fields": ["phone_number", "address"],
+            "onFail": "blockNavigation"
+          }
+        ]
+      },
+      {
+        "id": "step_medical",
+        "next": "step_consent",
+        "guards": [
+          {
+            "type": "validationPass",
+            "fields": ["primary_condition"],
+            "onFail": "blockNavigation"
+          }
+        ]
+      },
+      {
+        "id": "step_consent",
+        "next": null,
+        "guards": [
+          {
+            "type": "validationPass",
+            "fields": [
+              "emergency_contact_name",
+              "emergency_contact_phone",
+              "treatment_consent",
+              "data_sharing_consent"
+            ],
+            "onFail": "blockNavigation"
+          }
+        ],
+        "onComplete": {
+          "action": "submit",
+          "preSubmitHooks": ["generatePatientId", "timestampSubmission", "writeAuditLog"],
+          "postSubmitActions": ["sendConfirmationSMS", "notifyClinic"]
+        }
+      }
+    ],
+    "navigation": {
+      "allowBackNavigation": true,
+      "confirmOnBack": false,
+      "saveProgressOnBack": true,
+      "showStepProgress": true
+    }
+  }
+}

@@ -1,0 +1,666 @@
+{
+  "nodeType": "form",
+  "formId": "patient-registration-v1",
+  "version": "1.0.0",
+  "domain": "Healthcare",
+  "locale": "en-IN",
+  "layoutType": "stepped",
+  "initialStep": "step_identity",
+  "navigation": {
+    "allowBackNavigation": true,
+    "confirmOnBack": false,
+    "saveProgressOnBack": true,
+    "showStepProgress": true
+  },
+  "steps": [
+    {
+      "nodeType": "step",
+      "stepId": "step_identity",
+      "title": "Patient Identity",
+      "state": "visible",
+      "next": "step_contact",
+      "guards": [
+        {
+          "type": "validationPass",
+          "fields": [
+            "patient_name",
+            "date_of_birth",
+            "gender"
+          ],
+          "onFail": "blockNavigation"
+        }
+      ],
+      "sections": [
+        {
+          "nodeType": "section",
+          "sectionId": "section_personal",
+          "title": "Personal Information",
+          "collapsible": false,
+          "optional": false,
+          "columns": 2,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "patient_name",
+              "dataType": "string",
+              "dataProps": {
+                "maxLength": 100
+              },
+              "component": "TextInput",
+              "props": {
+                "autoComplete": "name",
+                "spellCheck": false
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "minLength",
+                  "value": 2,
+                  "message": "patient_name.minLength"
+                },
+                {
+                  "type": "pattern",
+                  "value": "^[a-zA-Z\\s]+$",
+                  "message": "patient_name.invalidChars"
+                }
+              ],
+              "behaviourBindings": [
+                "lock_fields_on_consent"
+              ],
+              "i18n": {
+                "label": "Full Name",
+                "placeholder": "As per government ID",
+                "helpText": "Enter your name exactly as it appears on your government-issued ID"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "date_of_birth",
+              "dataType": "date",
+              "dataProps": {
+                "format": "DD/MM/YYYY"
+              },
+              "component": "DatePicker",
+              "props": {
+                "maxDate": "today",
+                "minDate": "1900-01-01",
+                "calendarStartDay": "monday"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "minAge",
+                  "value": 0,
+                  "message": "date_of_birth.future"
+                },
+                {
+                  "type": "maxAge",
+                  "value": 120,
+                  "message": "date_of_birth.maxAge"
+                }
+              ],
+              "behaviourBindings": [
+                "lock_fields_on_consent"
+              ],
+              "i18n": {
+                "label": "Date of Birth",
+                "placeholder": "DD/MM/YYYY",
+                "helpText": null
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "gender",
+              "dataType": "enum",
+              "dataProps": {
+                "source": "static",
+                "options": [
+                  {
+                    "value": "MALE",
+                    "label": "Male"
+                  },
+                  {
+                    "value": "FEMALE",
+                    "label": "Female"
+                  },
+                  {
+                    "value": "OTHER",
+                    "label": "Other"
+                  }
+                ]
+              },
+              "component": "RadioGroup",
+              "props": {
+                "orientation": "horizontal",
+                "displayStyle": "card"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [],
+              "behaviourBindings": [
+                "lock_fields_on_consent"
+              ],
+              "i18n": {
+                "label": "Gender",
+                "placeholder": null,
+                "helpText": null
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "blood_group",
+              "dataType": "enum",
+              "dataProps": {
+                "source": "static",
+                "options": [
+                  {
+                    "value": "A_POS",
+                    "label": "A+"
+                  },
+                  {
+                    "value": "A_NEG",
+                    "label": "A-"
+                  },
+                  {
+                    "value": "B_POS",
+                    "label": "B+"
+                  },
+                  {
+                    "value": "B_NEG",
+                    "label": "B-"
+                  },
+                  {
+                    "value": "O_POS",
+                    "label": "O+"
+                  },
+                  {
+                    "value": "O_NEG",
+                    "label": "O-"
+                  },
+                  {
+                    "value": "AB_POS",
+                    "label": "AB+"
+                  },
+                  {
+                    "value": "AB_NEG",
+                    "label": "AB-"
+                  }
+                ]
+              },
+              "component": "Select",
+              "props": {
+                "searchable": false,
+                "clearable": true
+              },
+              "state": "visible",
+              "required": false,
+              "constraints": [],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Blood Group (Optional)",
+                "placeholder": "Select blood group",
+                "helpText": "If known — helps in emergency situations"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeType": "step",
+      "stepId": "step_contact",
+      "title": "Contact Details",
+      "state": "visible",
+      "next": "step_medical",
+      "guards": [
+        {
+          "type": "validationPass",
+          "fields": [
+            "phone_number",
+            "address"
+          ],
+          "onFail": "blockNavigation"
+        }
+      ],
+      "sections": [
+        {
+          "nodeType": "section",
+          "sectionId": "section_contact",
+          "title": "Contact Information",
+          "collapsible": false,
+          "optional": false,
+          "columns": 2,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "phone_number",
+              "dataType": "string",
+              "dataProps": {
+                "pattern": "^[6-9][0-9]{9}$"
+              },
+              "component": "TextInput",
+              "props": {
+                "inputMode": "numeric",
+                "autoComplete": "tel"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "exactLength",
+                  "value": 10,
+                  "message": "phone_number.invalidLength"
+                },
+                {
+                  "type": "pattern",
+                  "value": "^[6-9][0-9]{9}$",
+                  "message": "phone_number.invalidFormat"
+                }
+              ],
+              "behaviourBindings": [
+                "lock_fields_on_consent"
+              ],
+              "i18n": {
+                "label": "Mobile Number",
+                "placeholder": "10-digit mobile number",
+                "helpText": "We will send appointment confirmations to this number"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "email_address",
+              "dataType": "string",
+              "dataProps": {
+                "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+              },
+              "component": "TextInput",
+              "props": {
+                "inputMode": "email",
+                "autoComplete": "email",
+                "spellCheck": false
+              },
+              "state": "visible",
+              "required": false,
+              "constraints": [
+                {
+                  "type": "pattern",
+                  "value": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+                  "message": "email_address.invalidFormat"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Email Address (Optional)",
+                "placeholder": "your@email.com",
+                "helpText": "For appointment reminders and reports"
+              }
+            }
+          ]
+        },
+        {
+          "nodeType": "section",
+          "sectionId": "section_address",
+          "title": "Address",
+          "collapsible": false,
+          "optional": false,
+          "columns": 1,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "address",
+              "dataType": "text",
+              "dataProps": {
+                "maxLength": 300
+              },
+              "component": "TextArea",
+              "props": {
+                "rows": 3,
+                "resizable": false
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "minLength",
+                  "value": 10,
+                  "message": "address.minLength"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Residential Address",
+                "placeholder": "House number, street, locality, city, PIN code",
+                "helpText": null
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeType": "step",
+      "stepId": "step_medical",
+      "title": "Medical Information",
+      "state": "visible",
+      "next": "step_consent",
+      "guards": [
+        {
+          "type": "validationPass",
+          "fields": [
+            "primary_condition"
+          ],
+          "onFail": "blockNavigation"
+        }
+      ],
+      "sections": [
+        {
+          "nodeType": "section",
+          "sectionId": "section_condition",
+          "title": "Current Condition",
+          "collapsible": false,
+          "optional": false,
+          "columns": 1,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "primary_condition",
+              "dataType": "string",
+              "dataProps": {
+                "maxLength": 200
+              },
+              "component": "TextInput",
+              "props": {
+                "spellCheck": false
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "minLength",
+                  "value": 3,
+                  "message": "primary_condition.minLength"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Primary Reason for Visit",
+                "placeholder": "Briefly describe your condition or symptoms",
+                "helpText": null
+              }
+            }
+          ]
+        },
+        {
+          "nodeType": "section",
+          "sectionId": "section_history",
+          "title": "Medical History",
+          "collapsible": true,
+          "optional": true,
+          "columns": 1,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "allergies",
+              "dataType": "text",
+              "dataProps": {
+                "maxLength": 500
+              },
+              "component": "TextArea",
+              "props": {
+                "rows": 3,
+                "resizable": false
+              },
+              "state": "visible",
+              "required": false,
+              "constraints": [],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Known Allergies",
+                "placeholder": "List any known allergies e.g. Penicillin, Dust",
+                "helpText": "Leave blank if none known"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "current_medications",
+              "dataType": "text",
+              "dataProps": {
+                "maxLength": 500
+              },
+              "component": "TextArea",
+              "props": {
+                "rows": 3,
+                "resizable": false
+              },
+              "state": "visible",
+              "required": false,
+              "constraints": [],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Current Medications",
+                "placeholder": "List medications with dosage e.g. Metformin 500mg",
+                "helpText": "Leave blank if not applicable"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeType": "step",
+      "stepId": "step_consent",
+      "title": "Consent & Emergency Contact",
+      "state": "visible",
+      "next": null,
+      "guards": [
+        {
+          "type": "validationPass",
+          "fields": [
+            "emergency_contact_name",
+            "emergency_contact_phone",
+            "treatment_consent",
+            "data_sharing_consent"
+          ],
+          "onFail": "blockNavigation"
+        }
+      ],
+      "sections": [
+        {
+          "nodeType": "section",
+          "sectionId": "section_emergency",
+          "title": "Emergency Contact",
+          "collapsible": false,
+          "optional": false,
+          "columns": 2,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "emergency_contact_name",
+              "dataType": "string",
+              "dataProps": {
+                "maxLength": 100
+              },
+              "component": "TextInput",
+              "props": {
+                "autoComplete": "name",
+                "spellCheck": false
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "minLength",
+                  "value": 2,
+                  "message": "emergency_contact_name.minLength"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Emergency Contact Name",
+                "placeholder": "Full name of emergency contact",
+                "helpText": null
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "emergency_contact_phone",
+              "dataType": "string",
+              "dataProps": {
+                "pattern": "^[6-9][0-9]{9}$"
+              },
+              "component": "TextInput",
+              "props": {
+                "inputMode": "numeric",
+                "autoComplete": "tel"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "exactLength",
+                  "value": 10,
+                  "message": "emergency_contact_phone.invalidLength"
+                },
+                {
+                  "type": "pattern",
+                  "value": "^[6-9][0-9]{9}$",
+                  "message": "emergency_contact_phone.invalidFormat"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Emergency Contact Mobile",
+                "placeholder": "10-digit mobile number",
+                "helpText": null
+              }
+            }
+          ]
+        },
+        {
+          "nodeType": "section",
+          "sectionId": "section_consent",
+          "title": "Declarations",
+          "collapsible": false,
+          "optional": false,
+          "columns": 1,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "treatment_consent",
+              "dataType": "boolean",
+              "dataProps": {},
+              "component": "Checkbox",
+              "props": {
+                "variant": "prominent",
+                "linkedDocumentUrl": "/docs/treatment-consent.pdf"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "mustBeTrue",
+                  "message": "treatment_consent.required"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "I consent to examination and treatment by the assigned medical team",
+                "placeholder": null,
+                "helpText": "Required to proceed with registration"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "data_sharing_consent",
+              "dataType": "boolean",
+              "dataProps": {},
+              "component": "Checkbox",
+              "props": {
+                "variant": "prominent",
+                "linkedDocumentUrl": "/docs/data-sharing-policy.pdf"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "mustBeTrue",
+                  "message": "data_sharing_consent.required"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "I consent to my medical data being shared with treating physicians and relevant clinical staff",
+                "placeholder": null,
+                "helpText": "Your data is protected under applicable healthcare privacy regulations"
+              }
+            }
+          ]
+        }
+      ],
+      "onComplete": {
+        "action": "submit",
+        "preSubmitHooks": [
+          "generatePatientId",
+          "timestampSubmission",
+          "writeAuditLog"
+        ],
+        "postSubmitActions": [
+          "sendConfirmationSMS",
+          "notifyClinic"
+        ]
+      }
+    }
+  ],
+  "behaviourRules": [
+    {
+      "id": "lock_fields_on_consent",
+      "type": "stateChange",
+      "trigger": {
+        "event": "onStepEnter",
+        "stepId": "step_consent"
+      },
+      "actions": [
+        {
+          "type": "readonly",
+          "target": "patient_name"
+        },
+        {
+          "type": "readonly",
+          "target": "date_of_birth"
+        },
+        {
+          "type": "readonly",
+          "target": "gender"
+        },
+        {
+          "type": "readonly",
+          "target": "phone_number"
+        }
+      ]
+    }
+  ],
+  "auditLog": true
+}

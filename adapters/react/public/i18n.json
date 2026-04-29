@@ -1,0 +1,138 @@
+{
+  "locale": "en-IN",
+  "fields": {
+    "applicant_name": {
+      "label": "Full Name",
+      "placeholder": "As per PAN card",
+      "helpText": "Enter your name exactly as it appears on your PAN card"
+    },
+    "date_of_birth": {
+      "label": "Date of Birth",
+      "placeholder": "DD/MM/YYYY",
+      "helpText": "Applicant must be between 21 and 65 years of age"
+    },
+    "pan_number": {
+      "label": "PAN Number",
+      "placeholder": "e.g. ABCDE1234F",
+      "helpText": "10-character Permanent Account Number issued by the Income Tax Department"
+    },
+    "aadhaar_number": {
+      "label": "Aadhaar Number",
+      "placeholder": "12-digit Aadhaar number",
+      "helpText": "Your 12-digit Aadhaar number as issued by UIDAI"
+    },
+    "loan_type": {
+      "label": "Loan Type",
+      "placeholder": null,
+      "helpText": "Select the type of loan you are applying for"
+    },
+    "loan_amount": {
+      "label": "Loan Amount (₹)",
+      "placeholder": "Enter amount",
+      "helpText": "Minimum ₹10,000 — Maximum based on your income eligibility"
+    },
+    "loan_tenure_months": {
+      "label": "Loan Tenure",
+      "placeholder": null,
+      "helpText": "Select repayment period in months"
+    },
+    "annual_income": {
+      "label": "Annual Income (₹)",
+      "placeholder": "Enter gross annual income",
+      "helpText": "Your total gross income before tax deductions"
+    },
+    "employment_type": {
+      "label": "Employment Type",
+      "placeholder": "Select employment type",
+      "helpText": null
+    },
+    "employer_name": {
+      "label": "Employer Name",
+      "placeholder": "Name of your current employer",
+      "helpText": "Enter the full legal name of your employer"
+    },
+    "property_value": {
+      "label": "Property Market Value (₹)",
+      "placeholder": "Estimated market value",
+      "helpText": "Current market value of the property as assessed by a registered valuer"
+    },
+    "property_address": {
+      "label": "Property Address",
+      "placeholder": "Full address of the property",
+      "helpText": "Include flat/plot number, street, locality, city, state and PIN code"
+    },
+    "co_applicant_name": {
+      "label": "Co-Applicant Name (Optional)",
+      "placeholder": "Full name of co-applicant",
+      "helpText": "Adding a co-applicant may improve your loan eligibility"
+    },
+    "co_applicant_pan": {
+      "label": "Co-Applicant PAN",
+      "placeholder": "e.g. ABCDE1234F",
+      "helpText": null
+    },
+    "kyc_consent": {
+      "label": "I authorise the bank to perform KYC verification and access my credit bureau report",
+      "helpText": "This is required to process your loan application"
+    },
+    "declaration_consent": {
+      "label": "I declare that all information provided is true and accurate to the best of my knowledge",
+      "helpText": "False declaration may result in rejection and legal action"
+    },
+    "nominee_name": {
+      "label": "Nominee Name",
+      "placeholder": "Full name of nominee",
+      "helpText": "Required for home loans"
+    }
+  },
+  "errors": {
+    "applicant_name.minLength":              "Name must be at least 2 characters",
+    "applicant_name.invalidChars":           "Name can only contain letters and spaces",
+    "date_of_birth.minAge":                  "Applicant must be at least 21 years old",
+    "date_of_birth.maxAge":                  "Applicant must be below 65 years of age",
+    "pan_number.invalidFormat":              "PAN must be in the format AAAAA9999A",
+    "pan_number.invalidPan":                 "PAN number could not be verified. Please check and retry",
+    "aadhaar_number.invalidLength":          "Aadhaar number must be exactly 12 digits",
+    "aadhaar_number.invalidChecksum":        "Aadhaar number appears invalid. Please check and retry",
+    "loan_amount.min":                       "Minimum loan amount is ₹10,000",
+    "loan_amount.max":                       "Maximum loan amount is ₹1,00,00,000",
+    "loan_amount.exceedsEligibility":        "Loan amount cannot exceed 60× your annual income",
+    "loan_tenure_months.homeLoanMin":        "Home loans require a minimum tenure of 12 months",
+    "loan_tenure_months.personalLoanMax":    "Personal loans have a maximum tenure of 60 months",
+    "annual_income.min":                     "Minimum annual income required is ₹1,80,000",
+    "employer_name.requiredForSalaried":     "Employer name is required for salaried applicants",
+    "property_value.requiredForHomeLoan":    "Property value is required for home loan applications",
+    "property_value.belowLoanAmount":        "Property value must be at least 1.2× the loan amount",
+    "property_address.requiredForHomeLoan":  "Property address is required for home loan applications",
+    "co_applicant_pan.requiredWithName":     "PAN is required when a co-applicant name is provided",
+    "co_applicant_pan.sameAsPrimary":        "Co-applicant PAN cannot be the same as the primary applicant's PAN",
+    "kyc_consent.required":                  "You must authorise KYC verification to proceed",
+    "declaration_consent.required":          "You must accept the declaration to submit your application",
+    "eligibility.incomeInsufficient":        "Based on your income, you do not meet the minimum eligibility criteria",
+    "tenure_capped_personal":                "Tenure has been adjusted to the maximum of 60 months for personal loans",
+    "nominee_name.minLength": "Nominee name must be at least 2 characters",
+    "nominee_name.requiredForHomeLoan": "Nominee name is required for home loan applications" 
+  },
+  "ui": {
+    "steps": {
+      "step_personal":  "Personal Details",
+      "step_loan":      "Loan Details",
+      "step_financial": "Financial Information",
+      "step_consent":   "Review & Consent"
+    },
+    "sections": {
+      "section_identity":     "Identity Information",
+      "section_loan_basics":  "Loan Requirements",
+      "section_property":     "Property Details",
+      "section_employment":   "Employment Details",
+      "section_co_applicant": "Co-Applicant Details",
+      "section_consent":      "Declarations"
+    },
+    "actions": {
+      "next":   "Continue",
+      "back":   "Previous",
+      "submit": "Submit Application",
+      "draft":  "Save as Draft"
+    }
+  }
+}

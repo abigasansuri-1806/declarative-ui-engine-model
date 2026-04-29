@@ -1,0 +1,328 @@
+{
+  "version": "1.0.0",
+  "description": "UI Meta-Model — defines all valid types, components, constraints, actions and the AUT node contract",
+
+  "dataTypes": {
+    "string": {
+      "description": "Variable-length text, single line",
+      "intrinsicProps": {
+        "maxLength": { "type": "integer", "required": false },
+        "pattern":   { "type": "string",  "required": false }
+      },
+      "compatibleComponents": ["TextInput"]
+    },
+    "text": {
+      "description": "Variable-length text, multi-line",
+      "intrinsicProps": {
+        "maxLength": { "type": "integer", "required": false }
+      },
+      "compatibleComponents": ["TextArea"]
+    },
+    "integer": {
+      "description": "Whole number",
+      "intrinsicProps": {
+        "min": { "type": "integer", "required": false },
+        "max": { "type": "integer", "required": false }
+      },
+      "compatibleComponents": ["TextInput", "SliderInput"]
+    },
+    "currency": {
+      "description": "Monetary value with currency code",
+      "intrinsicProps": {
+        "currency": { "type": "string",  "required": true  },
+        "min":      { "type": "number",  "required": false },
+        "max":      { "type": "number",  "required": false }
+      },
+      "compatibleComponents": ["CurrencyInput"]
+    },
+    "date": {
+      "description": "Calendar date without time",
+      "intrinsicProps": {
+        "format":  { "type": "string", "required": false },
+        "minDate": { "type": "string", "required": false },
+        "maxDate": { "type": "string", "required": false }
+      },
+      "compatibleComponents": ["DatePicker"]
+    },
+    "boolean": {
+      "description": "True or false value",
+      "intrinsicProps": {},
+      "compatibleComponents": ["Checkbox"]
+    },
+    "enum": {
+      "description": "A value from a fixed or dynamic set of options",
+      "intrinsicProps": {
+        "source":  { "type": "string", "required": true, "allowedValues": ["static", "remote"] },
+        "options": { "type": "array",  "required": false, "note": "Required when source is static" }
+      },
+      "compatibleComponents": ["Select", "RadioGroup"]
+    }
+  },
+
+  "components": {
+    "TextInput": {
+      "compatibleTypes": ["string", "integer"],
+      "props": {
+        "autoComplete":  { "type": "string",  "required": false },
+        "spellCheck":    { "type": "boolean", "required": false },
+        "transform":     { "type": "string",  "required": false, "allowedValues": ["uppercase", "lowercase", "none"] },
+        "maskPattern":   { "type": "string",  "required": false },
+        "maskDisplay":   { "type": "string",  "required": false },
+        "inputMode":     { "type": "string",  "required": false, "allowedValues": ["text", "numeric", "email", "tel"] }
+      }
+    },
+    "TextArea": {
+      "compatibleTypes": ["text"],
+      "props": {
+        "rows":      { "type": "integer", "required": false },
+        "resizable": { "type": "boolean", "required": false }
+      }
+    },
+    "DatePicker": {
+      "compatibleTypes": ["date"],
+      "props": {
+        "maxDate":          { "type": "string",  "required": false },
+        "minDate":          { "type": "string",  "required": false },
+        "calendarStartDay": { "type": "string",  "required": false, "allowedValues": ["monday", "sunday"] }
+      }
+    },
+    "CurrencyInput": {
+      "compatibleTypes": ["currency"],
+      "props": {
+        "currencySymbol":    { "type": "string",  "required": false },
+        "thousandSeparator": { "type": "boolean", "required": false },
+        "showSlider":        { "type": "boolean", "required": false },
+        "sliderStep":        { "type": "integer", "required": false }
+      }
+    },
+    "SliderInput": {
+      "compatibleTypes": ["integer"],
+      "props": {
+        "step":        { "type": "integer", "required": false },
+        "showLabels":  { "type": "boolean", "required": false },
+        "labelFormat": { "type": "string",  "required": false }
+      }
+    },
+    "Select": {
+      "compatibleTypes": ["enum"],
+      "props": {
+        "searchable": { "type": "boolean", "required": false },
+        "clearable":  { "type": "boolean", "required": false }
+      }
+    },
+    "RadioGroup": {
+      "compatibleTypes": ["enum"],
+      "props": {
+        "orientation":   { "type": "string", "required": false, "allowedValues": ["horizontal", "vertical"] },
+        "displayStyle":  { "type": "string", "required": false, "allowedValues": ["default", "card", "button"] }
+      }
+    },
+    "Checkbox": {
+      "compatibleTypes": ["boolean"],
+      "props": {
+        "variant":           { "type": "string", "required": false, "allowedValues": ["default", "prominent"] },
+        "linkedDocumentUrl": { "type": "string", "required": false }
+      }
+    }
+  },
+
+  "constraints": {
+    "min": {
+      "description": "Minimum numeric value",
+      "requiredProps": ["value", "message"],
+      "applicableTypes": ["integer", "currency"]
+    },
+    "max": {
+      "description": "Maximum numeric value",
+      "requiredProps": ["value", "message"],
+      "applicableTypes": ["integer", "currency"]
+    },
+    "minLength": {
+      "description": "Minimum string length",
+      "requiredProps": ["value", "message"],
+      "applicableTypes": ["string", "text"]
+    },
+    "maxLength": {
+      "description": "Maximum string length",
+      "requiredProps": ["value", "message"],
+      "applicableTypes": ["string", "text"]
+    },
+    "exactLength": {
+      "description": "Exact string length required",
+      "requiredProps": ["value", "message"],
+      "applicableTypes": ["string"]
+    },
+    "pattern": {
+      "description": "Regex pattern the value must match",
+      "requiredProps": ["value", "message"],
+      "applicableTypes": ["string"]
+    },
+    "minAge": {
+      "description": "Minimum age derived from a date field",
+      "requiredProps": ["value", "message"],
+      "applicableTypes": ["date"]
+    },
+    "maxAge": {
+      "description": "Maximum age derived from a date field",
+      "requiredProps": ["value", "message"],
+      "applicableTypes": ["date"]
+    },
+    "luhn": {
+      "description": "Luhn algorithm checksum validation",
+      "requiredProps": ["message"],
+      "applicableTypes": ["string"]
+    },
+    "mustBeTrue": {
+      "description": "Boolean field must be true",
+      "requiredProps": ["message"],
+      "applicableTypes": ["boolean"]
+    },
+    "requiredWhen": {
+      "description": "Field becomes required when condition is met",
+      "requiredProps": ["when", "message"],
+      "applicableTypes": ["string", "text", "integer", "currency", "date", "boolean", "enum"]
+    },
+    "crossField": {
+      "description": "Validation rule referencing another field's value",
+      "requiredProps": ["rule", "message"],
+      "ruleShape": {
+        "left":     { "type": "string", "description": "Field ID of the left operand" },
+        "operator": { "type": "string", "allowedValues": ["==", "!=", ">", "<", ">=", "<="] },
+        "right":    { "type": "object", "description": "Right operand — field reference with optional arithmetic" }
+      },
+      "applicableTypes": ["integer", "currency"]
+    },
+    "conditionalMin": {
+      "description": "Minimum value that applies only when a condition is met",
+      "requiredProps": ["when", "value", "message"],
+      "applicableTypes": ["integer", "currency"]
+    },
+    "notEqualTo": {
+      "description": "Value must not equal another field's value",
+      "requiredProps": ["value", "message"],
+      "applicableTypes": ["string"]
+    },
+    "conditional": {
+      "description": "Wraps another constraint and applies it only when a condition is met",
+      "requiredProps": ["when", "then"],
+      "applicableTypes": ["string", "text", "integer", "currency", "date", "boolean", "enum"]
+    },
+    "remote": {
+      "description": "Async server-side validation",
+      "requiredProps": ["endpoint", "message"],
+      "optionalProps": ["trigger", "debounce", "async"],
+      "applicableTypes": ["string"]
+    }
+  },
+
+  "conditionOperators": {
+    "comparison": {
+      "allowedValues": ["==", "!=", ">", "<", ">=", "<="],
+      "shape": {
+        "field":    { "type": "string",  "required": true,  "description": "Field ID to evaluate" },
+        "op":       { "type": "string",  "required": true,  "description": "Comparison operator" },
+        "value":    { "type": "any",     "required": true,  "description": "Value to compare against — null, string, number, or empty string" }
+      }
+    },
+    "compound": {
+      "allowedValues": ["AND", "OR"],
+      "shape": {
+        "operator":  { "type": "string", "required": true },
+        "operands":  { "type": "array",  "required": true, "description": "Array of comparison condition objects" }
+      }
+    }
+  },
+
+  "actions": {
+    "show":     { "description": "Make a field or section visible",          "requiredProps": ["target"] },
+    "hide":     { "description": "Make a field or section invisible",        "requiredProps": ["target"] },
+    "clear":    { "description": "Clear the value of a field",               "requiredProps": ["target"] },
+    "readonly": { "description": "Make a field non-editable",                "requiredProps": ["target"] },
+    "setValue": { "description": "Set a field to a specific value",          "requiredProps": ["target", "value"] },
+    "setMax":   { "description": "Dynamically update a field's max value",   "requiredProps": ["target", "value"] },
+    "notify":   { "description": "Show an inline notification on a field",   "requiredProps": ["target", "message"] }
+  },
+
+  "fieldStates": {
+    "description": "All valid states a field node can be in within the AUT",
+    "states": {
+      "visible":  "Field is rendered and interactive",
+      "hidden":   "Field is not rendered — value is cleared on hide",
+      "readonly": "Field is rendered but not editable",
+      "disabled": "Field is rendered but greyed out and not editable",
+      "error":    "Field has one or more active validation errors",
+      "warning":  "Field has a non-blocking notification"
+    },
+    "defaultState": "visible",
+    "transitions": {
+      "visible":  ["hidden", "readonly", "disabled", "error", "warning"],
+      "hidden":   ["visible"],
+      "readonly": ["visible", "error"],
+      "disabled": ["visible"],
+      "error":    ["visible", "hidden"],
+      "warning":  ["visible", "hidden"]
+    }
+  },
+
+  "autNodeSchema": {
+    "description": "The shape of a fully resolved field node in the Abstract UI Tree",
+    "fieldNode": {
+      "nodeType":   { "type": "string",  "value": "field",   "description": "Always 'field' for field nodes" },
+      "fieldId":    { "type": "string",  "required": true,   "description": "Unique field identifier from data layer" },
+      "dataType":   { "type": "string",  "required": true,   "description": "Resolved data type from data layer" },
+      "component":  { "type": "string",  "required": true,   "description": "Resolved component type from components layer" },
+      "props":      { "type": "object",  "required": true,   "description": "Merged component props — validated against component registry" },
+      "state":      { "type": "string",  "required": true,   "description": "Initial field state — one of fieldStates.states" },
+      "required":   { "type": "boolean", "required": true,   "description": "Whether the field is required at initial render" },
+      "constraints":{ "type": "array",   "required": true,   "description": "Resolved constraint list from validation layer" },
+      "behaviourBindings": {
+        "type": "array",
+        "required": true,
+        "description": "List of behaviour rule IDs that reference this field as trigger or target"
+      },
+      "i18n": {
+        "type": "object",
+        "required": true,
+        "description": "Resolved display strings from i18n layer",
+        "shape": {
+          "label":       { "type": "string", "required": true  },
+          "placeholder": { "type": "string", "required": false },
+          "helpText":    { "type": "string", "required": false }
+        }
+      }
+    },
+    "sectionNode": {
+      "nodeType":    { "type": "string",  "value": "section" },
+      "sectionId":   { "type": "string",  "required": true   },
+      "title":       { "type": "string",  "required": true   },
+      "collapsible": { "type": "boolean", "required": true   },
+      "columns":     { "type": "integer", "required": true   },
+      "reflow":      { "type": "string",  "required": true   },
+      "state":       { "type": "string",  "required": true,  "description": "visible or hidden — controlled by behaviour layer" },
+      "fields":      { "type": "array",   "required": true,  "description": "Ordered array of resolved fieldNode objects" }
+    },
+    "stepNode": {
+      "nodeType":  { "type": "string",  "value": "step"  },
+      "stepId":    { "type": "string",  "required": true  },
+      "title":     { "type": "string",  "required": true  },
+      "state":     { "type": "string",  "required": true  },
+      "guards":    { "type": "array",   "required": true,  "description": "Resolved guard list from workflow layer" },
+      "sections":  { "type": "array",   "required": true,  "description": "Ordered array of resolved sectionNode objects" }
+    },
+    "autRoot": {
+      "nodeType":   { "type": "string", "value": "form"  },
+      "formId":     { "type": "string", "required": true  },
+      "version":    { "type": "string", "required": true  },
+      "domain":     { "type": "string", "required": true  },
+      "locale":     { "type": "string", "required": true  },
+      "layoutType": { "type": "string", "required": true  },
+      "steps":      { "type": "array",  "required": true,  "description": "Ordered array of resolved stepNode objects" },
+      "behaviourRules": {
+        "type": "array",
+        "required": true,
+        "description": "Full resolved behaviour rule list — adapter subscribes to these for runtime evaluation"
+      },
+      "auditLog": { "type": "boolean", "required": true }
+    }
+  }
+}

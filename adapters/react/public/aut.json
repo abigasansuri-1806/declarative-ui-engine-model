@@ -1,0 +1,1040 @@
+{
+  "nodeType": "form",
+  "formId": "loan-application-v1",
+  "version": "1.0.0",
+  "domain": "BFSI",
+  "locale": "en-IN",
+  "layoutType": "stepped",
+  "initialStep": "step_personal",
+  "navigation": {
+    "allowBackNavigation": true,
+    "confirmOnBack": false,
+    "saveProgressOnBack": true,
+    "showStepProgress": true
+  },
+  "steps": [
+    {
+      "nodeType": "step",
+      "stepId": "step_personal",
+      "title": "Personal Details",
+      "state": "visible",
+      "next": "step_loan",
+      "guards": [
+        {
+          "type": "validationPass",
+          "fields": [
+            "applicant_name",
+            "date_of_birth",
+            "pan_number",
+            "aadhaar_number"
+          ],
+          "onFail": "blockNavigation"
+        }
+      ],
+      "sections": [
+        {
+          "nodeType": "section",
+          "sectionId": "section_identity",
+          "title": "Identity Information",
+          "collapsible": false,
+          "optional": false,
+          "columns": 2,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "applicant_name",
+              "dataType": "string",
+              "dataProps": {
+                "maxLength": 100
+              },
+              "component": "TextInput",
+              "props": {
+                "autoComplete": "name",
+                "spellCheck": false
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "minLength",
+                  "value": 2,
+                  "message": "applicant_name.minLength"
+                },
+                {
+                  "type": "pattern",
+                  "value": "^[a-zA-Z\\s]+$",
+                  "message": "applicant_name.invalidChars"
+                }
+              ],
+              "behaviourBindings": [
+                "lock_consents_on_review"
+              ],
+              "i18n": {
+                "label": "Full Name",
+                "placeholder": "As per PAN card",
+                "helpText": "Enter your name exactly as it appears on your PAN card"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "date_of_birth",
+              "dataType": "date",
+              "dataProps": {
+                "format": "DD/MM/YYYY"
+              },
+              "component": "DatePicker",
+              "props": {
+                "maxDate": "today",
+                "minDate": "1900-01-01",
+                "calendarStartDay": "monday"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "minAge",
+                  "value": 21,
+                  "message": "date_of_birth.minAge"
+                },
+                {
+                  "type": "maxAge",
+                  "value": 65,
+                  "message": "date_of_birth.maxAge"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Date of Birth",
+                "placeholder": "DD/MM/YYYY",
+                "helpText": "Applicant must be between 21 and 65 years of age"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "pan_number",
+              "dataType": "string",
+              "dataProps": {
+                "pattern": "^[A-Z]{5}[0-9]{4}[A-Z]{1}$"
+              },
+              "component": "TextInput",
+              "props": {
+                "transform": "uppercase",
+                "maskPattern": "AAAAA9999A",
+                "spellCheck": false
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "pattern",
+                  "value": "^[A-Z]{5}[0-9]{4}[A-Z]{1}$",
+                  "message": "pan_number.invalidFormat"
+                },
+                {
+                  "type": "remote",
+                  "endpoint": "/api/validate/pan",
+                  "trigger": "onBlur",
+                  "debounce": 500,
+                  "message": "pan_number.invalidPan"
+                }
+              ],
+              "behaviourBindings": [
+                "lock_consents_on_review"
+              ],
+              "i18n": {
+                "label": "PAN Number",
+                "placeholder": "e.g. ABCDE1234F",
+                "helpText": "10-character Permanent Account Number issued by the Income Tax Department"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "aadhaar_number",
+              "dataType": "string",
+              "dataProps": {
+                "pattern": "^[0-9]{12}$"
+              },
+              "component": "TextInput",
+              "props": {
+                "inputMode": "numeric",
+                "maskDisplay": "XXXX-XXXX-####"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "exactLength",
+                  "value": 12,
+                  "message": "aadhaar_number.invalidLength"
+                },
+                {
+                  "type": "luhn",
+                  "message": "aadhaar_number.invalidChecksum"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "Aadhaar Number",
+                "placeholder": "12-digit Aadhaar number",
+                "helpText": "Your 12-digit Aadhaar number as issued by UIDAI"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeType": "step",
+      "stepId": "step_loan",
+      "title": "Loan Details",
+      "state": "visible",
+      "next": "step_financial",
+      "guards": [
+        {
+          "type": "validationPass",
+          "fields": [
+            "loan_type",
+            "loan_amount",
+            "loan_tenure_months"
+          ],
+          "onFail": "blockNavigation"
+        },
+        {
+          "type": "conditionalValidationPass",
+          "when": "loan_type == HOME",
+          "fields": [
+            "property_value",
+            "property_address"
+          ],
+          "onFail": "blockNavigation"
+        }
+      ],
+      "sections": [
+        {
+          "nodeType": "section",
+          "sectionId": "section_loan_basics",
+          "title": "Loan Requirements",
+          "collapsible": false,
+          "optional": false,
+          "columns": 2,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "loan_type",
+              "dataType": "enum",
+              "dataProps": {
+                "source": "static",
+                "options": [
+                  {
+                    "value": "PERSONAL",
+                    "label": "Personal Loan"
+                  },
+                  {
+                    "value": "HOME",
+                    "label": "Home Loan"
+                  },
+                  {
+                    "value": "VEHICLE",
+                    "label": "Vehicle Loan"
+                  },
+                  {
+                    "value": "EDUCATION",
+                    "label": "Education Loan"
+                  }
+                ]
+              },
+              "component": "RadioGroup",
+              "props": {
+                "orientation": "horizontal",
+                "displayStyle": "card"
+              },
+              "state": "visible",
+              "required": false,
+              "constraints": [],
+              "behaviourBindings": [
+                "show_property_fields",
+                "cap_tenure_for_personal_loan",
+                "lock_consents_on_review",
+                "show_nominee_for_home_loan"
+              ],
+              "i18n": {
+                "label": "Loan Type",
+                "placeholder": null,
+                "helpText": "Select the type of loan you are applying for"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "loan_amount",
+              "dataType": "currency",
+              "dataProps": {
+                "currency": "INR",
+                "min": 10000,
+                "max": 10000000
+              },
+              "component": "CurrencyInput",
+              "props": {
+                "currencySymbol": "₹",
+                "thousandSeparator": true,
+                "showSlider": true,
+                "sliderStep": 10000
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "min",
+                  "value": 10000,
+                  "message": "loan_amount.min"
+                },
+                {
+                  "type": "max",
+                  "value": 10000000,
+                  "message": "loan_amount.max"
+                },
+                {
+                  "type": "crossField",
+                  "rule": {
+                    "left": "loan_amount",
+                    "operator": "<=",
+                    "right": {
+                      "field": "annual_income",
+                      "multiply": 60
+                    }
+                  },
+                  "message": "loan_amount.exceedsEligibility"
+                }
+              ],
+              "behaviourBindings": [
+                "update_max_loan_amount",
+                "lock_consents_on_review"
+              ],
+              "i18n": {
+                "label": "Loan Amount (₹)",
+                "placeholder": "Enter amount",
+                "helpText": "Minimum ₹10,000 — Maximum based on your income eligibility"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "loan_tenure_months",
+              "dataType": "integer",
+              "dataProps": {
+                "min": 6,
+                "max": 360
+              },
+              "component": "SliderInput",
+              "props": {
+                "step": 6,
+                "showLabels": true,
+                "labelFormat": "{value} months"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "conditional",
+                  "when": "loan_type == HOME",
+                  "then": {
+                    "type": "min",
+                    "value": 12,
+                    "message": "loan_tenure_months.homeLoanMin"
+                  }
+                },
+                {
+                  "type": "conditional",
+                  "when": "loan_type == PERSONAL",
+                  "then": {
+                    "type": "max",
+                    "value": 60,
+                    "message": "loan_tenure_months.personalLoanMax"
+                  }
+                }
+              ],
+              "behaviourBindings": [
+                "cap_tenure_for_personal_loan"
+              ],
+              "i18n": {
+                "label": "Loan Tenure",
+                "placeholder": null,
+                "helpText": "Select repayment period in months"
+              }
+            }
+          ]
+        },
+        {
+          "nodeType": "section",
+          "sectionId": "section_property",
+          "title": "Property Details",
+          "collapsible": true,
+          "optional": false,
+          "columns": 1,
+          "reflow": "compress",
+          "state": "hidden",
+          "behaviourBindings": [
+            "show_property_fields"
+          ],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "property_value",
+              "dataType": "currency",
+              "dataProps": {
+                "currency": "INR",
+                "min": 0
+              },
+              "component": "CurrencyInput",
+              "props": {
+                "currencySymbol": "₹",
+                "thousandSeparator": true
+              },
+              "state": "hidden",
+              "required": false,
+              "constraints": [
+                {
+                  "type": "requiredWhen",
+                  "when": "loan_type == HOME",
+                  "message": "property_value.requiredForHomeLoan"
+                },
+                {
+                  "type": "conditionalMin",
+                  "when": "loan_type == HOME",
+                  "value": {
+                    "field": "loan_amount",
+                    "multiply": 1.2
+                  },
+                  "message": "property_value.belowLoanAmount"
+                }
+              ],
+              "behaviourBindings": [
+                "show_property_fields"
+              ],
+              "i18n": {
+                "label": "Property Market Value (₹)",
+                "placeholder": "Estimated market value",
+                "helpText": "Current market value of the property as assessed by a registered valuer"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "property_address",
+              "dataType": "text",
+              "dataProps": {
+                "maxLength": 500
+              },
+              "component": "TextArea",
+              "props": {
+                "rows": 3,
+                "resizable": false
+              },
+              "state": "hidden",
+              "required": false,
+              "constraints": [
+                {
+                  "type": "requiredWhen",
+                  "when": "loan_type == HOME",
+                  "message": "property_address.requiredForHomeLoan"
+                }
+              ],
+              "behaviourBindings": [
+                "show_property_fields"
+              ],
+              "i18n": {
+                "label": "Property Address",
+                "placeholder": "Full address of the property",
+                "helpText": "Include flat/plot number, street, locality, city, state and PIN code"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeType": "step",
+      "stepId": "step_financial",
+      "title": "Financial Information",
+      "state": "visible",
+      "next": "step_consent",
+      "guards": [
+        {
+          "type": "validationPass",
+          "fields": [
+            "employment_type",
+            "annual_income"
+          ],
+          "onFail": "blockNavigation"
+        },
+        {
+          "type": "conditionalValidationPass",
+          "when": "employment_type == SALARIED",
+          "fields": [
+            "employer_name"
+          ],
+          "onFail": "blockNavigation"
+        },
+        {
+          "type": "eligibilityCheck",
+          "rule": {
+            "field": "annual_income",
+            "op": ">=",
+            "value": 180000
+          },
+          "onFail": "showMessage",
+          "message": "eligibility.incomeInsufficient"
+        }
+      ],
+      "sections": [
+        {
+          "nodeType": "section",
+          "sectionId": "section_employment",
+          "title": "Employment Details",
+          "collapsible": false,
+          "optional": false,
+          "columns": 2,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "employment_type",
+              "dataType": "enum",
+              "dataProps": {
+                "source": "static",
+                "options": [
+                  {
+                    "value": "SALARIED",
+                    "label": "Salaried"
+                  },
+                  {
+                    "value": "SELF_EMPLOYED",
+                    "label": "Self Employed"
+                  },
+                  {
+                    "value": "BUSINESS",
+                    "label": "Business Owner"
+                  }
+                ]
+              },
+              "component": "Select",
+              "props": {
+                "searchable": false,
+                "clearable": false
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [],
+              "behaviourBindings": [
+                "show_employer_field"
+              ],
+              "i18n": {
+                "label": "Employment Type",
+                "placeholder": "Select employment type",
+                "helpText": null
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "employer_name",
+              "dataType": "string",
+              "dataProps": {
+                "maxLength": 150
+              },
+              "component": "TextInput",
+              "props": {
+                "autoComplete": "organization"
+              },
+              "state": "hidden",
+              "required": false,
+              "constraints": [
+                {
+                  "type": "requiredWhen",
+                  "when": "employment_type == SALARIED",
+                  "message": "employer_name.requiredForSalaried"
+                }
+              ],
+              "behaviourBindings": [
+                "show_employer_field"
+              ],
+              "i18n": {
+                "label": "Employer Name",
+                "placeholder": "Name of your current employer",
+                "helpText": "Enter the full legal name of your employer"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "annual_income",
+              "dataType": "currency",
+              "dataProps": {
+                "currency": "INR",
+                "min": 0
+              },
+              "component": "CurrencyInput",
+              "props": {
+                "currencySymbol": "₹",
+                "thousandSeparator": true
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "min",
+                  "value": 180000,
+                  "message": "annual_income.min"
+                }
+              ],
+              "behaviourBindings": [
+                "update_max_loan_amount"
+              ],
+              "i18n": {
+                "label": "Annual Income (₹)",
+                "placeholder": "Enter gross annual income",
+                "helpText": "Your total gross income before tax deductions"
+              }
+            }
+          ]
+        },
+        {
+          "nodeType": "section",
+          "sectionId": "section_co_applicant",
+          "title": "Co-Applicant Details",
+          "collapsible": true,
+          "optional": true,
+          "columns": 2,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "co_applicant_name",
+              "dataType": "string",
+              "dataProps": {
+                "maxLength": 100
+              },
+              "component": "TextInput",
+              "props": {
+                "autoComplete": "name"
+              },
+              "state": "visible",
+              "required": false,
+              "constraints": [],
+              "behaviourBindings": [
+                "require_co_applicant_pan"
+              ],
+              "i18n": {
+                "label": "Co-Applicant Name (Optional)",
+                "placeholder": "Full name of co-applicant",
+                "helpText": "Adding a co-applicant may improve your loan eligibility"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "co_applicant_pan",
+              "dataType": "string",
+              "dataProps": {
+                "pattern": "^[A-Z]{5}[0-9]{4}[A-Z]{1}$"
+              },
+              "component": "TextInput",
+              "props": {
+                "transform": "uppercase",
+                "maskPattern": "AAAAA9999A"
+              },
+              "state": "hidden",
+              "required": false,
+              "constraints": [
+                {
+                  "type": "requiredWhen",
+                  "when": "co_applicant_name != null",
+                  "message": "co_applicant_pan.requiredWithName"
+                },
+                {
+                  "type": "notEqualTo",
+                  "value": "pan_number",
+                  "message": "co_applicant_pan.sameAsPrimary"
+                }
+              ],
+              "behaviourBindings": [
+                "require_co_applicant_pan"
+              ],
+              "i18n": {
+                "label": "Co-Applicant PAN",
+                "placeholder": "e.g. ABCDE1234F",
+                "helpText": null
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "nominee_name",
+              "dataType": "string",
+              "dataProps": {
+                "maxLength": 100
+              },
+              "component": "TextInput",
+              "props": {
+                "autoComplete": "name",
+                "spellCheck": false
+              },
+              "state": "hidden",
+              "required": false,
+              "constraints": [
+                {
+                  "type": "minLength",
+                  "value": 2,
+                  "message": "nominee_name.minLength"
+                },
+                {
+                  "type": "requiredWhen",
+                  "when": "loan_type == HOME",
+                  "message": "nominee_name.requiredForHomeLoan"
+                }
+              ],
+              "behaviourBindings": [
+                "show_nominee_for_home_loan"
+              ],
+              "i18n": {
+                "label": "Nominee Name",
+                "placeholder": "Full name of nominee",
+                "helpText": "Required for home loans"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeType": "step",
+      "stepId": "step_consent",
+      "title": "Review & Consent",
+      "state": "visible",
+      "next": null,
+      "guards": [
+        {
+          "type": "validationPass",
+          "fields": [
+            "kyc_consent",
+            "declaration_consent"
+          ],
+          "onFail": "blockNavigation"
+        }
+      ],
+      "sections": [
+        {
+          "nodeType": "section",
+          "sectionId": "section_consent",
+          "title": "Declarations",
+          "collapsible": false,
+          "optional": false,
+          "columns": 1,
+          "reflow": "compress",
+          "state": "visible",
+          "behaviourBindings": [],
+          "fields": [
+            {
+              "nodeType": "field",
+              "fieldId": "kyc_consent",
+              "dataType": "boolean",
+              "dataProps": {},
+              "component": "Checkbox",
+              "props": {
+                "variant": "prominent",
+                "linkedDocumentUrl": "/docs/kyc-terms.pdf"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "mustBeTrue",
+                  "message": "kyc_consent.required"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "I authorise the bank to perform KYC verification and access my credit bureau report",
+                "placeholder": null,
+                "helpText": "This is required to process your loan application"
+              }
+            },
+            {
+              "nodeType": "field",
+              "fieldId": "declaration_consent",
+              "dataType": "boolean",
+              "dataProps": {},
+              "component": "Checkbox",
+              "props": {
+                "variant": "prominent",
+                "linkedDocumentUrl": "/docs/loan-declaration.pdf"
+              },
+              "state": "visible",
+              "required": true,
+              "constraints": [
+                {
+                  "type": "mustBeTrue",
+                  "message": "declaration_consent.required"
+                }
+              ],
+              "behaviourBindings": [],
+              "i18n": {
+                "label": "I declare that all information provided is true and accurate to the best of my knowledge",
+                "placeholder": null,
+                "helpText": "False declaration may result in rejection and legal action"
+              }
+            }
+          ]
+        }
+      ],
+      "onComplete": {
+        "action": "submit",
+        "preSubmitHooks": [
+          "generateApplicationId",
+          "timestampSubmission",
+          "writeAuditLog"
+        ],
+        "postSubmitActions": [
+          "sendConfirmationEmail",
+          "triggerCreditBureau"
+        ]
+      }
+    }
+  ],
+  "behaviourRules": [
+    {
+      "id": "show_property_fields",
+      "type": "visibility",
+      "trigger": {
+        "field": "loan_type",
+        "event": "onChange"
+      },
+      "condition": {
+        "field": "loan_type",
+        "op": "==",
+        "value": "HOME"
+      },
+      "actions": [
+        {
+          "type": "show",
+          "target": "property_value"
+        },
+        {
+          "type": "show",
+          "target": "property_address"
+        },
+        {
+          "type": "show",
+          "target": "section_property"
+        }
+      ],
+      "elseActions": [
+        {
+          "type": "hide",
+          "target": "property_value"
+        },
+        {
+          "type": "hide",
+          "target": "property_address"
+        },
+        {
+          "type": "hide",
+          "target": "section_property"
+        },
+        {
+          "type": "clear",
+          "target": "property_value"
+        },
+        {
+          "type": "clear",
+          "target": "property_address"
+        }
+      ]
+    },
+    {
+      "id": "show_employer_field",
+      "type": "visibility",
+      "trigger": {
+        "field": "employment_type",
+        "event": "onChange"
+      },
+      "condition": {
+        "field": "employment_type",
+        "op": "==",
+        "value": "SALARIED"
+      },
+      "actions": [
+        {
+          "type": "show",
+          "target": "employer_name"
+        }
+      ],
+      "elseActions": [
+        {
+          "type": "hide",
+          "target": "employer_name"
+        },
+        {
+          "type": "clear",
+          "target": "employer_name"
+        }
+      ]
+    },
+    {
+      "id": "cap_tenure_for_personal_loan",
+      "type": "fieldUpdate",
+      "trigger": {
+        "field": "loan_type",
+        "event": "onChange"
+      },
+      "condition": {
+        "operator": "AND",
+        "operands": [
+          {
+            "field": "loan_type",
+            "op": "==",
+            "value": "PERSONAL"
+          },
+          {
+            "field": "loan_tenure_months",
+            "op": ">",
+            "value": "60"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "setValue",
+          "target": "loan_tenure_months",
+          "value": 60
+        },
+        {
+          "type": "notify",
+          "target": "loan_tenure_months",
+          "message": "tenure_capped_personal"
+        }
+      ]
+    },
+    {
+      "id": "update_max_loan_amount",
+      "type": "fieldUpdate",
+      "trigger": {
+        "field": "annual_income",
+        "event": "onBlur"
+      },
+      "condition": {
+        "field": "annual_income",
+        "op": "!=",
+        "value": null
+      },
+      "actions": [
+        {
+          "type": "setMax",
+          "target": "loan_amount",
+          "value": {
+            "field": "annual_income",
+            "multiply": 60
+          }
+        }
+      ]
+    },
+    {
+      "id": "require_co_applicant_pan",
+      "type": "validation",
+      "trigger": {
+        "field": "co_applicant_name",
+        "event": "onChange"
+      },
+      "condition": {
+        "operator": "AND",
+        "operands": [
+          {
+            "field": "co_applicant_name",
+            "op": "!=",
+            "value": null
+          },
+          {
+            "field": "co_applicant_name",
+            "op": "!=",
+            "value": ""
+          }
+        ]
+      },
+      "actions": [
+        {
+          "type": "show",
+          "target": "co_applicant_pan"
+        }
+      ],
+      "elseActions": [
+        {
+          "type": "hide",
+          "target": "co_applicant_pan"
+        },
+        {
+          "type": "clear",
+          "target": "co_applicant_pan"
+        }
+      ]
+    },
+    {
+      "id": "lock_consents_on_review",
+      "type": "stateChange",
+      "trigger": {
+        "event": "onStepEnter",
+        "stepId": "step_consent"
+      },
+      "actions": [
+        {
+          "type": "readonly",
+          "target": "applicant_name"
+        },
+        {
+          "type": "readonly",
+          "target": "pan_number"
+        },
+        {
+          "type": "readonly",
+          "target": "loan_type"
+        },
+        {
+          "type": "readonly",
+          "target": "loan_amount"
+        }
+      ]
+    },
+    {
+      "id": "show_nominee_for_home_loan",
+      "type": "visibility",
+      "trigger": {
+        "field": "loan_type",
+        "event": "onChange"
+      },
+      "condition": {
+        "field": "loan_type",
+        "op": "==",
+        "value": "HOME"
+      },
+      "actions": [
+        {
+          "type": "show",
+          "target": "nominee_name"
+        }
+      ],
+      "elseActions": [
+        {
+          "type": "hide",
+          "target": "nominee_name"
+        },
+        {
+          "type": "clear",
+          "target": "nominee_name"
+        }
+      ]
+    }
+  ],
+  "auditLog": true
+}

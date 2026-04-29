@@ -1,0 +1,18 @@
+{
+  "rules": [
+    {
+      "id": "lock_fields_on_consent",
+      "type": "stateChange",
+      "trigger": {
+        "event": "onStepEnter",
+        "stepId": "step_consent"
+      },
+      "actions": [
+        { "type": "readonly", "target": "patient_name" },
+        { "type": "readonly", "target": "date_of_birth" },
+        { "type": "readonly", "target": "gender" },
+        { "type": "readonly", "target": "phone_number" }
+      ]
+    }
+  ]
+}
